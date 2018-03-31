@@ -7,6 +7,7 @@ $().ready(function() {
              <h4 class="media-heading">${val.Name}</h4> 
              <p>${val.Adress}</p>
              <p>${val.Contacts}</p>
+             <p><hr></p>
             </div>
           </div>`;
         });
