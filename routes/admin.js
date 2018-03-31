@@ -29,11 +29,18 @@ router.get('/schools', function(req, res, next) {
     });
 });
 
-router.get('/schools-add', function(req, res, next) { //Додати країну    
+router.get('/schools-add', function(req, res, next) { //Додати/редагувати країну    
     res.render('admin/schools-add', {
         layout: 'admin/layout',
         title: 'Add School'
     });
+});
+
+router.get('/schools-delete', function(req, res, next) { //Видалити країну    
+    res.render('admin/schools-delete', {
+        layout: 'admin/layout',
+        title: 'Delete School '+req.body.SchoolName
+        });
 });
 
 router.post('/schools-add', function(req, res) { //Результат додавання країни
@@ -44,8 +51,8 @@ router.post('/schools-add', function(req, res) { //Результат додав
         } else {
             School.create({
                 Name: req.body.SchoolName,
-                Desc: req.body.SchoolDescription,
-                Image: req.body.imageURL,
+                Adress: req.body.SchoolAdress,
+                Contacts: req.body.SchoolContacts,
             }, function(err, School) {
                 if (err) {
                     console.error('Error: ' + err);
@@ -54,6 +61,29 @@ router.post('/schools-add', function(req, res) { //Результат додав
                     res.render('admin/School-res', {
                         title: 'Super: ',
                         message: 'School added to DB succesfully'
+                    });
+            });
+        }
+    });
+});
+
+router.post('/schools-delete', function(req, res) { //Результат Видалення країни
+    School.remove({ Name: req.body.SchoolName }, function(err) {
+        if (err) {
+            console.error(err);
+            res.render('admin/schools-delete', { title: 'Error', message: err });
+        } else {
+            console.log(req.body.SchoolName);
+            School.remove({
+                      Name: req.body.SchoolName                                    
+            }, function(err, School) {
+                if (err) {
+                    console.error('Error: ' + err);
+                    res.render('admin/schools-delete', { title: 'Error І', message: err });
+                } else
+                    res.render('admin/schools-delete', {
+                        title: 'Super: ',
+                        message: 'School remove from DB succesfully'
                     });
             });
         }
