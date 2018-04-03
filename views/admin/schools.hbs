@@ -1,19 +1,22 @@
 <link rel='stylesheet' href='/stylesheets/style.css' />
 
-<a href="/admin/schools-add" class="btn btn-primary">Add/Edit School</a>
-<a href="/admin/schools-delete" class="btn btn-primary" >Delete School</a>
-<table class="table table-bordered">    
+<a href="/admin/schools-add" class="btn btn-primary">Add School</a>
+<table class="table table-bordered">   
+    <colgroup>
+    </colgroup> 
     <thead>
         <th>Name</td>
         <th>Adress</td>
-        <th>Contacts</td>    
+        <th>Contacts</td>
+        <th>Tools</th>    
     </thead>
     <tbody>
 {{#each schools}}
-<tr>    
+<tr>        
     <td> <div id="tableOfAdd">{{Name}} </div>  </td> 
     <td> <div id="tableOfAdd">{{Adress}} </div> </td>
     <td> <div id="tableOfAdd">{{Contacts}} </div> </td>
+    <td> <div id="tableOfAdd"><a href="/admin/schools-edit/{{_id}}" class="btn btn-primary">Edit School</a> | <a href="/admin/schools-delete/{{_id}}" class="btn btn-primary" >Delete School</a></div></td>    
 </tr>
 {{/each}}
 </tbody>

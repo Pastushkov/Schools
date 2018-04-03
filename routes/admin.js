@@ -29,19 +29,29 @@ router.get('/schools', function(req, res, next) {
     });
 });
 
-router.get('/schools-add', function(req, res, next) { //Додати/редагувати країну    
+router.get('/schools-add', function(req, res, next) { //Додати    
     res.render('admin/schools-add', {
         layout: 'admin/layout',
         title: 'Add School'
     });
 });
 
-router.get('/schools-delete', function(req, res, next) { //Видалити країну    
-    res.render('admin/schools-delete', {
-        layout: 'admin/layout',
-        title: 'Delete School '+req.body.SchoolName
-        });
+router.get('/schools-edit/:id', function(req, res) { //редагувати  
+    School.findById(req.para, function(err, schools) {
+        if (err) {
+            console.error(err);
+            res.render('admin/School-res', { title: 'Error', message: err });
+        } else {
+            res.render('admin/schools-add', {
+                layout: 'admin/layout',
+                title: 'Del School',
+                schools: schools
+            });
+        }
+    });
 });
+
+
 
 router.post('/schools-add', function(req, res) { //Результат додавання країни
     School.remove({ Name: req.body.SchoolName }, function(err) {
@@ -67,6 +77,35 @@ router.post('/schools-add', function(req, res) { //Результат додав
     });
 });
 
+router.post('/schools-edit/:id', function(req, res) { //Результат додавання країни
+    School.findById(req.para, function(err, schools) {
+        if (err) {
+            console.error('Error: ' + err);
+            res.render('admin/School-res', { title: 'Error І', message: err });
+        } else {
+            res.render('admin/School-res', {
+                title: 'Super: ',
+                message: 'School added to DB succesfully'
+            });
+        }
+    });
+});
+
+router.get('/schools-delete/:id', function(req, res, next) { //Видалити     
+    School.findById(req.para, function(err, schools) {
+        if (err) {
+            console.error(err);
+            res.render('admin/School-res', { title: 'Error', message: err });
+        } else {
+            res.render('admin/schools-delete', {
+                layout: 'admin/layout',
+                title: 'Delete School',
+                schools: schools
+            });
+        }
+    });
+});
+
 router.post('/schools-delete', function(req, res) { //Результат Видалення країни
     School.remove({ Name: req.body.SchoolName }, function(err) {
         if (err) {
@@ -75,7 +114,7 @@ router.post('/schools-delete', function(req, res) { //Результат Вид�
         } else {
             console.log(req.body.SchoolName);
             School.remove({
-                      Name: req.body.SchoolName                                    
+                Name: req.body.SchoolName
             }, function(err, School) {
                 if (err) {
                     console.error('Error: ' + err);

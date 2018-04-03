@@ -1,8 +1,11 @@
-<div class="jumbotron">
-    <div>
-        <img src="http://pipsum.com/1200x500.jpg" alt="avatar" class="img-responsive"> 
-        <div>Schools</div>
-g
-   
-    </div>
-</div></div>
+{{title}}
+
+{{#each schools}}
+<div class="media">  
+  <div class="media-body">
+   <h4 class="media-heading">{{Name}}</h4> 
+   <p>{{Adress}}</p>
+   <p>{{Contacts}}</p>
+  </div>
+</div>
+{{/each}}
