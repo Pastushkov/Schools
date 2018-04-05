@@ -3,7 +3,8 @@ var router = express.Router();
 var School = require('../models/school');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    //res.render('index', { title: 'SchoolsSTART' });
+    res.render('index', { title: 'Ajax Demo', layout: 'layout1' });
 });
 
 /* GET schools page. */
