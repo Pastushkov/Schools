@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
+    "bootstrap": "^3.3.7",
+    "bower": "^1.8.4",
     "browserify-middleware": "^8.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
