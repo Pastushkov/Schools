@@ -66,35 +66,29 @@ router.get('/schools-edit/:id', function(req, res) { //редагувати
             console.error(err);
             res.render('admin/School-res', { title: 'Error', message: err });
         } else {
-            res.render('admin/schools-edit', {
+            res.render('admin/schools-add', {
                 layout: 'admin/layout',
-                title: 'Delete School',
+                title: 'Edit School',
                 schools: schools
             });
         }
     });
 });
-
-router.post('/schools-edit/:id', function(req, res) { //Результат redagyvanna країни 
-    School.remove({_id: req.params.id }, function(err) {
-        if (err) {                        
-            console.error(err);
-            res.render('admin/School-res', { title: 'Error', message: err });
+router.post('/schools-edit/:id', function(req, res) { //Результат редагування країни     
+    School.findOneAndUpdate({ _id: req.params.id }, {
+        $set: {
+            Name: req.body.SchoolName,
+            Adress: req.body.SchoolAdress,
+            Contacts: req.body.SchoolContacts
+        }
+    }, function(err) {
+        if (err) {
+            console.error('Error: ' + err);
+            res.render('admin/School-res', { title: 'Error І', message: err });
         } else {
-            School.remove({_id: req.params.id});
-            School.create({                
-                Name: req.body.SchoolName,
-                Adress: req.body.SchoolAdress,
-                Contacts: req.body.SchoolContacts,
-            }, function(err, School) {
-                if (err) {
-                    console.error('Error: ' + err);
-                    res.render('admin/School-res', { title: 'Error І', message: err });
-                } else
-                    res.render('admin/School-res', {
-                        title: 'Super: ',
-                        message: 'School edit succesfully'
-                    });
+            res.render('admin/School-res', {
+                title: 'Super: ',
+                message: 'School edit succesfully'
             });
         }
     });
@@ -118,24 +112,16 @@ router.get('/schools-delete/:id', function(req, res, next) { //Видалити
 
 router.post('/schools-delete/:id', function(req, res) { //Результат додавання країни 
     School.remove({ _id: req.params.id }, function(err) {
-        if (err) {                                   
+        if (err) {
             //console.log(req.params);
             console.error(err);
-              res.render('admin/School-res', { title: 'Error', message: err });
-        } else {           
-            School.remove({
-                _id: req.params.id  ,          
-            }, function(err, School) {
-                if (err) {
-                    console.error('Error: ' + err);
-                    res.render('admin/School-res', { title: 'Error І', message: err });
-                } else
-                    res.render('admin/School-res', {
-                        title: 'Super: ',
-                        message: 'School delete succesfully'
-                    });
+            res.render('admin/School-res', { title: 'Error', message: err });
+        } else {
+            res.render('admin/School-res', {
+                title: 'Super: ',
+                message: 'School delete succesfully'
             });
-         }
+        }
     });
 });
 

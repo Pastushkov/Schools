@@ -59,8 +59,12 @@ router.get("/setup-db", function(req, res) {
             }
         }
     });
-    res.status(200).json({
-        message: "Okey",
+    /*res.status(200).json({
+        message: "Okey"
+    });*/
+    res.render('admin/School-res', {
+        title: 'Super: ',
+        message: 'School loaded succesfully'
     });
 
 });
